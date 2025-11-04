@@ -1,10 +1,14 @@
-// const firstName = document.querySelector(".f-name");
-// const lastName = document.querySelector(".l-name");
-// const email = document.querySelector(".email");
+const password = document.querySelector(".password");
 
-// firstName.addEventListener("click", () => {
-//   inputs.style.backgroundColor = "rgba(255, 255, 255, 0.136)";
-//   console.log("hi");
-// });
+const eye = document.querySelector(".eye");
 
-// document.ad
+eye.addEventListener("click", () => {
+  password.type === "password"
+    ? (password.type = "text")
+    : (password.type = "password");
+  if (password.type === "password") {
+    eye.classList.replace("fa-eye", "fa-eye-slash");
+  } else {
+    eye.classList.replace("fa-eye-slash", "fa-eye");
+  }
+});

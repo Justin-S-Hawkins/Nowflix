@@ -11,6 +11,7 @@ const genreModalName = document.querySelector(".genre-modal-name");
 
 //keep track of pages + total pages per genre
 const genreState = {};
+const genLi = document.querySelectorAll(".gen-li");
 
 const renderGenre = (genreMap) => {
   console.log(Object.keys(genreMap));
@@ -19,6 +20,7 @@ const renderGenre = (genreMap) => {
   for (let key of Object.keys(genreMap)) {
     //genre scroll
     const scroll = document.createElement("ul");
+    scroll.dataset.genreName = `${genreMap[key]}`;
 
     scroll.classList.add("scroll");
     scroll.dataset.id = key;
@@ -28,11 +30,6 @@ const renderGenre = (genreMap) => {
     scrollPosition.append(scroll);
     scrollPosition.dataset.genreId = `${key}`;
 
-    // const returnFunction = (currentGenre) => {
-    //   // console.log(currentGenre);
-    //   // console.log(scrollPosition);
-    //   scrollPosition.append(scroll);
-    // };
     //genre tab
     const genreTab = document.createElement("div");
     genreTab.classList.add("genre-chevron-tab");
@@ -41,6 +38,23 @@ const renderGenre = (genreMap) => {
     genreName.classList.add("genre-name");
     genreName.textContent = `${genreMap[key]}`;
     const genreMovie = document.querySelector(".genre-movies");
+
+    const genreList = document.querySelector(".genre-list");
+    const favorites = document.querySelector(".favorites");
+
+    const exit = () => {
+      genreModalContainer.classList.remove("active");
+      genreModalContainer.classList.remove("active-tw");
+      header.classList.remove("dark-header-movie");
+      footerPosition.append("footer");
+      scrollPosition.append(scroll);
+      scroll.classList.remove("adjust-genre-container");
+    };
+
+    logo.addEventListener("click", exit);
+    favorites.addEventListener("click", exit);
+    // genreList.addEventListener("click", exit);
+
     genreTab.addEventListener("click", () => {
       genreModalContainer.classList.add("active");
       genreModalContainer.append(footer);
@@ -48,30 +62,23 @@ const renderGenre = (genreMap) => {
       header.classList.add("dark-header-movie");
       genreMovie.append(scroll);
       scroll.classList.add("adjust-genre-container");
-      // const currentGenre = genreMovie.firstChild.dataset.id;
-      // console.log(`${scroll.dataset.id}`);
-      // returnFunction(currentGenre);
-      console.log(genreMap[key]);
-      logo.addEventListener("click", () => {
-        genreModalContainer.classList.remove("active");
-        header.classList.remove(".dark-header-movie");
-        footerPosition.append("footer");
-        scrollPosition.append(scroll);
-        scroll.classList.remove("adjust-genre-container");
-      });
-      const exit = () => {
-        genreModalContainer.classList.remove("active");
-        header.classList.remove(".dark-header-movie");
-        footerPosition.append("footer");
-        scrollPosition.append(scroll);
-        scroll.classList.remove("adjust-genre-container");
-      };
-      const genreList = document.querySelector(".genre-list");
-      const favorites = document.querySelector(".favorites");
-      logo.addEventListener("click", exit);
-      favorites.addEventListener("click", exit);
-      genreList.addEventListener("click", exit);
     });
+
+    // document.addEventListener("DOMContentLoaded", () => {
+    genLi.forEach((genre) => {
+      genre.addEventListener("click", () => {
+        if (scroll.dataset.genreName === genre.textContent) {
+          console.log(scroll.dataset.genreName, genre.textContent);
+          genreModalContainer.classList.add("active");
+          genreModalContainer.append(footer);
+          genreModalName.textContent = `${genreMap[key]}`;
+          header.classList.add("dark-header-movie");
+          genreMovie.append(scroll);
+          scroll.classList.add("adjust-genre-container");
+        }
+      });
+    });
+    // });
 
     genreName.id = `${genreMap[key]}`;
 
@@ -85,20 +92,12 @@ const renderGenre = (genreMap) => {
 
     renderByGenre(key, scroll);
 
-    //set up infinite scroll listener
-    // scroll.addEventListener("scroll", () => {
-    //   handleScroll(key, scroll);
-    // });
-    // const scrollPosition = document.createElement("div");
-    // scrollPosition.classList.add("scroll-position");
-    // scrollPosition.append(scroll);
-    // scrollPosition.dataset.genreId = `${key}`;
-
     genresContainer.append(genreTab, scrollPosition);
 
     console.log(genreMap[key]);
   }
 };
+
 renderGenre(genreMap);
 
 async function renderByGenre(key, container) {
@@ -171,8 +170,30 @@ async function renderByGenre(key, container) {
   // console.log(movieArray);
 }
 
-logo.addEventListener("click", () => {
-  genreModalContainer.classList.remove("active");
-  header.classList.remove(".dark-header-movie");
-  footerPosition.append("footer");
-});
+// logo.addEventListener("click", () => {
+//   genreModalContainer.classList.remove("active");
+//   header.classList.remove(".dark-header-movie");
+//   footerPosition.append("footer");
+//   scrollPosition.append(scroll);
+// });
+
+// const genLi = document.querySelectorAll(".gen-li");
+// const scroll = document.querySelectorAll(".scroll");
+// scroll.forEach((ul) => {
+//   console.log(`${ul.dataset.genreName}`);
+//   genLi.forEach((genre) => {
+//     genre.addEventListener("click", () => {
+//       const selectedGenre = `${genre.textContent}`;
+//     });
+//   });
+// });
+// console.log(scroll);
+// genLi.forEach((genre) => {
+//   genre.addEventListener("click", () => {
+//     const selectedGenre = `${genre.textContent}`;
+//   });
+// });
+
+// use the genre clicked on to match
+// i made it where 'data-genre-name' is a dataset with the genre's name as its value
+//so we can associate the scroll ul with the selected genre in browse

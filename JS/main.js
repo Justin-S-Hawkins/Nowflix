@@ -43,7 +43,7 @@ for (let value of Object.values(genreMap)) {
   const li = document.createElement("li");
   const a = document.createElement("a");
   li.classList.add("gen-li");
-  a.href = `#${value}`;
+  // a.href = `#${value}`;
   a.textContent = value;
   li.append(a);
 

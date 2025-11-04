@@ -19,6 +19,8 @@
   align-items: center;
   transition: all 0.2s ease-in-out;
   margin-left: 4rem;
+  /* z-index: 1; */
+  position: relative;
 }
 .genre-chevron-tab:hover {
   color: var(--nowflix-yellow);
@@ -108,7 +110,8 @@
   transition: var(--transition-fast);
   overflow: auto;
 }
-.genre-modal-container.active {
+.genre-modal-container.active,
+.genre-modal-container.active-tw {
   opacity: 1;
   visibility: visible;
 }
